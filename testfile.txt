@@ -1,3 +1,0 @@
-this is test file for using git.
-modified
-modified2
