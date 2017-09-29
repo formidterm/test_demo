@@ -43,7 +43,7 @@ UNIX가 널리 보급된 1980년대 초반, AT & T는 UNIX의 무료배포를 �
 <p align="center">
 <img src ="https://upload.wikimedia.org/wikipedia/commons/6/6d/Atandt_unix_pc.jpg" width="500" height ="400">
 </p>
-위 사진은 AT&T의 UNIX 컴퓨터이다.
+<center>위 사진은 AT&T의 UNIX 컴퓨터이다.</center>
 
 
 * __컴퓨터 벤더와 소프트웨어 전용 회사__
