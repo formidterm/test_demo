@@ -41,7 +41,7 @@ UNIX가 널리 보급된 1980년대 초반, AT & T는 UNIX의 무료배포를 �
 
 다른 아키텍처로 전환하는 것이 매우 어렵기 때문에 이에 따라 무료로 배포를 받은 단체나 사람들은 상용 라이센스를 지불하며 UNIX를 사용하기 시작했다.
 
-<img src ="https://upload.wikimedia.org/wikipedia/commons/6/6d/Atandt_unix_pc.jpg" width="2000">
+<img src ="https://upload.wikimedia.org/wikipedia/commons/6/6d/Atandt_unix_pc.jpg" width="200">
 
 위 사진은 AT&T의 UNIX 컴퓨터이다.
 
