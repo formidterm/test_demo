@@ -11,3 +11,14 @@ int main(void) {
 	return 0 ;
 }
 ```
+
+# JAVA 
+
+```java 
+
+public class PrintDemo{
+	public static void main(String args[]) {
+		System.out.println("Print Test") ;
+	}
+}
+```
