@@ -4,11 +4,11 @@
 
 '''{.c}
 
-#include <stdio.h> 
+	#include <stdio.h> 
 
-int main(void) {
-	printf("This is test for markdown syntax") ;
-	return 0 ;
-}
+	int main(void) {
+		printf("This is test for markdown syntax") ;
+		return 0 ;
+	}
 
 '''
