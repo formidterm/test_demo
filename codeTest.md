@@ -2,7 +2,7 @@
 
 ## C Language
 
-'''{.c}
+
 
 	#include <stdio.h> 
 
@@ -11,4 +11,3 @@
 		return 0 ;
 	}
 
-'''
