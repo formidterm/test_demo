@@ -1,4 +1,4 @@
-# [c언어] 정수 자료형 
+# [c언어] 2. 정수 자료형 
 
 우리는 '[c언어] 1. 변수' 시간에 자료형에 대해 잠깐 익힌 적이 있다.
 
@@ -21,7 +21,7 @@
 
 등이 존재한다. 자세한 내용을 다루기 전에, 먼저 정수 자료형에 쓰이는 signed / unsigned 키워드에 대해 알아보도록 하겠다.
 
-## 2. sigend / unsigned 
+## 2. signed / unsigned 
 
 자료형은 선택하는 자료형에 따라 값을 담을 수 있는 값의 크기가 달라진다고 '[c언어] 1. 변수' 에서 언급하였다.
 
@@ -150,6 +150,228 @@ n byte | 0이상 2<sup>8n</sup> 미만 | 2<sup>8n</sup> 개
 
 왜 비트와 바이트에 대한 설명을 자세하게 적어두었을까? 
 
-그것은 바로 unsigned 와 signed 의 차이를 설명하기 위해서이다.
+그것은 바로 unsigned 와 signed 의 차이를 구체적으로 설명하기 위해서이다.
 
-지금부터 설명을 하겠다.
+그럼 지금부터 설명을 하겠다.
+
+앞선 표를 보게되면, int의 크기는 4바이트이다. 
+
+따라서, int 형은 총 (2<sup>8</sup>)<sup>4</sup> = 2<sup>32</sup> 개의 수를 표시할 수 있을 것 같지만 unsigned / signed 키워드가 붙느냐 붙지 않느냐에 따라 담을 수 있는 숫자의 갯수가 다르다
+
+#### singed의 경우(signed는 생략이 가능하다)
+
+앞서 signed int(= int)는 4바이트 크기이고, 4바이트는 2<sup>32</sup>개의 숫자를 담을 수있다고 하였다.
+
+signed는 부호있는 정수를 표시한다고 하였다.
+
+그렇다면 signed int형에서 음의 정수,0,양의 정수를 어떻게 나누어 2<sup>32</sup>갯수 안에 담아낼까?
+
+2<sup>32</sup>개의 숫자를 반으로 나눠 2<sup>31</sup>개의 수는 음의 정수를 나머지 2<sup>31</sup>개 의 수는 0과 양의 정수를 표현할 수 있게 하면 된다.
+
+즉 signed int(= int)의 범위는 -2<sup>31</sup> ~ 2<sup>31</sup>-1 으로,
+
+음의 정수는 -2<sup>31</sup> ~ -1 까지 총 2<sup>31</sup> 개, 그리고 0이상의 정수는 0 ~ 2<sup>31</sup>-1 로 총 2<sup>32</sup> 개이다.
+
+다른 정수 자료형도 위와 같이 적용하면 된다.
+
+#### unsigned의 경우
+
+unsigned int 의 경우 부호 없는 정수를 표현하기 때문에 0과 양의 정수가 총 2<sup>32</sup>개이면 된다. 
+
+따라서 0이상의 정수 2<sup>32</sup>개로 unsigned int 의 범위는 0 ~ 2<sup>32</sup>-1이다.
+
+## 4. 정수 자료형 변수 선언과 할당
+
+#include <stdio.h> 
+
+```c
+int main(void)
+{
+	char val1 = -10 ; 
+	short val2 = 20000; 
+	int val3 = -12345678;
+	long val4 = 123456789 ;
+	long long val5 = 123456789012 ;
+
+	printf("%d %d %d %ld %lld\n",val1,val2,val3,val4,val5);
+	/* char, short, int 는 %d, long은 %ld long long 은 %lld 로 하여야 출력이 된다 */
+
+	return 0 ;
+}
+```
+```
+출력 결과 
+
+-10 20000 -12345678 123456789 123456789012
+```
+
+차례대로 정수자료형 변수를 선언하였다.
+
+쓰고 싶은 자료형을 선택한 뒤 **'[c언어] 1. 변수'**에서처럼 변수를 선언하고 할당을 해주면 된다.
+
+```c
+#include <stdio.h> 
+
+int main(void)
+{
+	unsigned char us_val1 = 254 ; 
+	unsigned short us_val2 = 65354 ;
+	unsigned int us_val3 = 4294967290 ; 
+	unsigned long us_val4 = 429496791 ;
+	unsigned long long us_val5 = 184444430000 ; 
+
+	printf("%u %u %u %lu %llu\n",us_val1,us_val2,us_val3,us_val4,us_val5);
+	/* unsigned 가 앞에 붙은 char,short, int 는 %u를 쓰고, 
+	unsigned 가 붙은 long 은 %lu, long long 은 %llu 로 하여야 출력이 된다.*/ 
+	
+	return 0 ; 
+}
+```
+```
+출력 결과 
+
+254 65354 4294967290 429496791 184444430000
+```
+unsigned 키워드를 사용하여 변수를 선언하고 할당한 것이다.
+
+## 5. 오버플로우와 언더플로우 
+
+선택한 자료형이 저장할 수 있는 범위를 넘어선 값을 변수에 할당하게 되면 실행시 자신이 원하는 결과를 얻지 못할 수가 있다. 
+
+지금 설명하려는 것은 이러한 경우와 관련된 것이다.
+
+### 5.1. 오버플로우(overflow)
+
+말 그대로 '넘쳐흘렀다'라는 뜻으로, 선택한 자료형이 담을 수 있는 최댓값보다 초과해서 값을 할당했을 때 일어나는 현상을 가리킨다.
+
+정수 자료형에서 오버플로우가 일어나면 선택한 자료형이 담을 수 있는 **'자신이 할당한 값 - 최댓값'**만큼 다시 최솟값에서 시작하게된다.
+
+그리고 그 최종적인 값을 변수가 가지게 된다.
+
+### 5.2. 언더플로우(underflow)
+
+오버플로우와 반대의 경우이다. 선택한 자료형이 담을 수있는 최솟값보다 작은 숫자를 변수에 할당하려고 했을 때 일어난다.
+
+정수 자료형에서 언더플로우는 그 자료형이 담을 수 잇는 최댓값에서 다시 시작하게된다.
+
+그리고 그 최종적인 값을 변수가 가지게 된다.
+
+### 예시
+
+```c
+#include <stdio.h> 
+
+int main(void)
+{
+	char val1 = 128 ;
+	/* char 형이 담을 수 있는 최댓값은 127 인데 128을 할당하였으므로 오버플로우 발생. 
+	따라서 val1 에는 -128이 담긴다*/
+
+	char val2 = 129 ;
+	/* char 형이 담을 수 있는 최댓값은 127 인데 129을 할당하였으므로 오버플로우 발생. 
+	2만큼 더 초과하였으므로 따라서 val1 에는 -127이 담긴다*/
+	
+	unsigned char val3 = 256 ;
+	/* unsigned char 형이 담을 수 있는 최댓값은 255 인데 256을 할당하였으므로 오버플로우 발생. 
+	따라서 val1 에는 0이 담긴다*/
+
+	char val4 = -129 ;
+	/* char 형이 담을 수 있는 최솟값은 -128 인데 -129을 할당하였으므로 언더플로우 발생. 
+	따라서 val1 에는 127이 담긴다*/
+
+	printf("%d %d %d %d\n",val1, val2, val3, val4) ;
+
+	return 0 ;
+}
+```
+
+```
+출력 결과 
+
+-128 -127 0 127
+```
+
+주석을 참고하시길 바란다.
+
+## 6. 자료형 크기 연산자 
+
+자료형 크기를 구할 때 **size of** 연산자를 사용한다.
+
+size of 는 자료형의 크기를 byte(바이트)단위로 구한다.
+
+**사용방법**
+
+* sizeof 표현식 
+
+* sizeof(자료형)
+
+* sizeof(표현식)
+
+### 예시
+
+```c
+#include <stdio.h> 
+
+int main(void)
+{
+	int val1 = 1 ; 
+
+	int size1 = sizeof val1 ; 
+	/* sizeof 표현식*/
+
+	int size2 = sizeof(val1) ; 
+	/* sizeof(표현식)*/
+
+	int size3 = sizeof(int) ; 
+	/* sizeof(자료형) */
+
+	printf("%d %d %d \n",size1, size2, size3);
+
+	return 0 ; 
+}
+```
+
+```
+출력 결과 
+
+4 4 4 
+```
+
+모두 int형 변수이기 때문에 출력 결과로 int형 자료형의 크기인 4바이트가 나온다.
+
+## 7. 정수 자료형 최댓값, 최솟값 활용하기 
+
+각 정수 자료형의 최댓값, 최솟값은 limits.h 라는 곳에도 저장되어 있다.
+
+따라서 `#include <limits.h>` 를 통해 각 정수 자료형의 최댓값, 최솟값을 손쉽게 사용할 수 있다.
+
+### 예시 
+
+```c
+#include <stdio.h> 
+#include <limits.h>
+
+int main(void)
+{
+	char val1 = CHAR_MIN ; 
+	short val2 = SHRT_MAX ; 
+
+	int val3 = INT_MAX ; 
+
+	long val4 = LONG_MIN ; 
+
+	unsigned int val5 = UINT_MAX ;
+
+	printf("%d %d %d %ld %u\n",val1, val2, val3, val4,val5);
+
+	return 0 ; 
+}
+```
+
+```
+출력 결과 
+
+-128 32767 2147483647 -9223372036854775808 4294967295
+```
+
+각 정수 자료형의 최댓값과 최솟값을 선택하여 사용해보았다.
